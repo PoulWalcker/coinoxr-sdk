@@ -51,6 +51,33 @@ class RatesService:
 
         return self._request_service.get(path, params)
 
+    def time_series(
+            self,
+            start_date: str,
+            end_date: str,
+            base: str | None = None,
+            symbols: str | None = None,
+            pretty_print=False,
+            show_alternative=False
+    ):
+        start_iso = self._convert_date_to_iso(start_date)
+        end_iso = self._convert_date_to_iso(end_date)
+
+        params = {
+            'start': start_iso,
+            'end': end_iso,
+            'pretty_print': pretty_print,
+            'show_alternative': show_alternative
+        }
+
+        if base is not None:
+            params['base'] = base
+
+        if symbols is not None:
+            params['symbols'] = symbols
+
+        return self._request_service.get('/time-series.json', params)
+
 
 
     @staticmethod
