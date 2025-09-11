@@ -3,6 +3,8 @@ from sdk.utils.dates import ensure_date
 
 
 class RatesService:
+    """Service for /latest.json, /historical/{date}.json and /time-series.json endpoints"""
+
     def __init__(self, requester_service: RequesterService):
         self._request_service = requester_service
 
@@ -10,11 +12,11 @@ class RatesService:
             self,
             base: str | None = None,
             symbols: list[str] | None = None,
-            pretty_print=False,
-            show_alternative=False
+            pretty_print: bool = False,
+            show_alternative: bool = False
     ):
         params = {
-            'pretty_print': pretty_print,
+            'prettyprint': pretty_print,
             'show_alternative': show_alternative
         }
 
@@ -31,8 +33,8 @@ class RatesService:
             date: str,
             base: str | None = None,
             symbols: list[str] | None = None,
-            pretty_print=False,
-            show_alternative=False
+            pretty_print: bool = False,
+            show_alternative: bool = False
     ):
         if not ensure_date(date, "%Y-%m-%d"):
             raise ValueError("Invalid date format for 'date', expected YYYY-MM-DD")
@@ -40,7 +42,7 @@ class RatesService:
         path = f'/historical/{date}.json'
 
         params = {
-            'pretty_print': pretty_print,
+            'prettyprint': pretty_print,
             'show_alternative': show_alternative
         }
 
@@ -58,8 +60,8 @@ class RatesService:
             end: str,
             base: str | None = None,
             symbols: list[str] | None = None,
-            pretty_print=False,
-            show_alternative=False
+            pretty_print: bool = False,
+            show_alternative: bool = False
     ):
 
         if not ensure_date(start, "%Y-%m-%d"):
@@ -74,7 +76,7 @@ class RatesService:
         params = {
             'start': start,
             'end': end,
-            'pretty_print': pretty_print,
+            'prettyprint': pretty_print,
             'show_alternative': show_alternative
         }
 

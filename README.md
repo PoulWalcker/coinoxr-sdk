@@ -24,7 +24,7 @@ print(currencies)
 
 ### currencies
 - **Endpoint:** `/currencies.json`  
-- **Method:** `client.currencies.currencies()`
+- **Method:** `client.currencies.get()`
 
 ### rates
 - **Endpoints:**

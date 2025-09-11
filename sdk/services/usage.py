@@ -2,10 +2,11 @@ from sdk.services.requester import RequesterService
 
 
 class UsageService:
+    """Service for /usage.json endpoint"""
     def __init__(self, requester_service: RequesterService):
         self._request_service = requester_service
 
-    def usage(self, pretty_print=False):
+    def usage(self, pretty_print: bool = False):
 
         params = {
             'pretty_print': pretty_print
