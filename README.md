@@ -22,6 +22,27 @@ print(currencies)
 
 ## Services
 
-1. currencies -> /currencies.json
+### currencies
+- **Endpoint:** `/currencies.json`  
+- **Method:** `client.currencies.currencies()`
+
+### rates
+- **Endpoints:**
+  - `/latest.json` → `client.rates.latest(base="USD", symbols=["EUR","GBP"])`
+  - `/historical/{YYYY-MM-DD}.json` → `client.rates.historical(date="2025-01-01", base="USD", symbols=["EUR"])`
+  - `/time-series.json` → `client.rates.time_series(start="2025-01-01", end="2025-01-31", base="USD", symbols=["EUR","GBP"])`
+
+### convert
+- **Endpoint:** `/convert`  
+- **Method:** `client.convert.convert("USD", "EUR", 100)`  
+
+### ohlc
+- **Endpoint:** `/ohlc.json`  
+- **Method:** `client.ohlc.ohlc(start="2025-01-01T00:00:00Z", period="daily", base="USD", symbols=["EUR","GBP"])`  
+
+### usage
+- **Endpoint:** `/usage.json`  
+- **Method:** `client.usage.usage()`  
+
 
 [WIP]
