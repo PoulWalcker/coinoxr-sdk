@@ -1,6 +1,5 @@
 from sdk.services.requester import RequesterService
-
-from datetime import date as d
+from sdk.utils.dates import ensure_date
 
 
 class RatesService:
@@ -10,7 +9,7 @@ class RatesService:
     def latest(
             self,
             base: str | None = None,
-            symbols: str | None = None,
+            symbols: list[str] | None = None,
             pretty_print=False,
             show_alternative=False
     ):
@@ -23,7 +22,7 @@ class RatesService:
             params['base'] = base
 
         if symbols is not None:
-            params['symbols'] = symbols
+            params['symbols'] = ','.join(symbols)
 
         return self._request_service.get('/latest.json', params)
 
@@ -31,12 +30,14 @@ class RatesService:
             self,
             date: str,
             base: str | None = None,
-            symbols: str | None = None,
+            symbols: list[str] | None = None,
             pretty_print=False,
             show_alternative=False
     ):
-        date_iso = self._convert_date_to_iso(date)
-        path = f'/historical/{date_iso}.json'
+        if not ensure_date(date, "%Y-%m-%d"):
+            raise ValueError("Invalid date format for 'date', expected YYYY-MM-DD")
+
+        path = f'/historical/{date}.json'
 
         params = {
             'pretty_print': pretty_print,
@@ -47,25 +48,32 @@ class RatesService:
             params['base'] = base
 
         if symbols is not None:
-            params['symbols'] = symbols
+            params['symbols'] = ','.join(symbols)
 
         return self._request_service.get(path, params)
 
     def time_series(
             self,
-            start_date: str,
-            end_date: str,
+            start: str,
+            end: str,
             base: str | None = None,
-            symbols: str | None = None,
+            symbols: list[str] | None = None,
             pretty_print=False,
             show_alternative=False
     ):
-        start_iso = self._convert_date_to_iso(start_date)
-        end_iso = self._convert_date_to_iso(end_date)
+
+        if not ensure_date(start, "%Y-%m-%d"):
+            raise ValueError("Invalid date format for 'start', expected YYYY-MM-DD")
+
+        if not ensure_date(end, "%Y-%m-%d"):
+            raise ValueError("Invalid date format for 'end', expected YYYY-MM-DD")
+
+        if start > end:
+            raise ValueError("'start' must be <= 'end'")
 
         params = {
-            'start': start_iso,
-            'end': end_iso,
+            'start': start,
+            'end': end,
             'pretty_print': pretty_print,
             'show_alternative': show_alternative
         }
@@ -74,15 +82,6 @@ class RatesService:
             params['base'] = base
 
         if symbols is not None:
-            params['symbols'] = symbols
+            params['symbols'] = ','.join(symbols)
 
         return self._request_service.get('/time-series.json', params)
-
-
-
-    @staticmethod
-    def _convert_date_to_iso(date: str):
-        try:
-            return d.fromisoformat(date)
-        except ValueError:
-            raise ValueError('Invalid date, expected YYYY-MM-DD')
