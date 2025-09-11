@@ -4,17 +4,18 @@ from sdk.utils.dates import ensure_date
 
 class OhlcService:
     """Service for /ohlc.json endpoint"""
+
     def __init__(self, requester_service: RequesterService):
         self._request_service = requester_service
 
     def ohlc(
-            self,
-            start: str,
-            period: str,
-            base: str | None = None,
-            symbols: str | None = None,
-            pretty_print: bool = False,
-            show_alternative: bool = False
+        self,
+        start: str,
+        period: str,
+        base: str | None = None,
+        symbols: str | None = None,
+        pretty_print: bool = False,
+        show_alternative: bool = False,
     ):
         if not ensure_date(start, "%Y-%m-%dT%H:%M:%SZ"):
             raise ValueError("Invalid datetime format, expected YYYY-MM-DDThh:mm:ssZ")
@@ -23,7 +24,7 @@ class OhlcService:
             'start': start,
             'period': period,
             'prettyprint': pretty_print,
-            'show_alternative': show_alternative
+            'show_alternative': show_alternative,
         }
 
         if base is not None:

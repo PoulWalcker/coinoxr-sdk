@@ -4,6 +4,7 @@ from sdk.config import DEFAULT_BASE_URL
 
 class RequesterService:
     """Service that builds full API requests and attaches app_id"""
+
     def __init__(self, app_id: str, client: HttpClient, base_url: str | None = None):
         self.client = client
         self.app_id = app_id

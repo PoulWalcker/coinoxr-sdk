@@ -9,16 +9,13 @@ class RatesService:
         self._request_service = requester_service
 
     def latest(
-            self,
-            base: str | None = None,
-            symbols: list[str] | None = None,
-            pretty_print: bool = False,
-            show_alternative: bool = False
+        self,
+        base: str | None = None,
+        symbols: list[str] | None = None,
+        pretty_print: bool = False,
+        show_alternative: bool = False,
     ):
-        params = {
-            'prettyprint': pretty_print,
-            'show_alternative': show_alternative
-        }
+        params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
 
         if base is not None:
             params['base'] = base
@@ -29,22 +26,19 @@ class RatesService:
         return self._request_service.get('/latest.json', params)
 
     def historical(
-            self,
-            date: str,
-            base: str | None = None,
-            symbols: list[str] | None = None,
-            pretty_print: bool = False,
-            show_alternative: bool = False
+        self,
+        date: str,
+        base: str | None = None,
+        symbols: list[str] | None = None,
+        pretty_print: bool = False,
+        show_alternative: bool = False,
     ):
         if not ensure_date(date, "%Y-%m-%d"):
             raise ValueError("Invalid date format for 'date', expected YYYY-MM-DD")
 
         path = f'/historical/{date}.json'
 
-        params = {
-            'prettyprint': pretty_print,
-            'show_alternative': show_alternative
-        }
+        params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
 
         if base is not None:
             params['base'] = base
@@ -55,13 +49,13 @@ class RatesService:
         return self._request_service.get(path, params)
 
     def time_series(
-            self,
-            start: str,
-            end: str,
-            base: str | None = None,
-            symbols: list[str] | None = None,
-            pretty_print: bool = False,
-            show_alternative: bool = False
+        self,
+        start: str,
+        end: str,
+        base: str | None = None,
+        symbols: list[str] | None = None,
+        pretty_print: bool = False,
+        show_alternative: bool = False,
     ):
 
         if not ensure_date(start, "%Y-%m-%d"):
@@ -77,7 +71,7 @@ class RatesService:
             'start': start,
             'end': end,
             'prettyprint': pretty_print,
-            'show_alternative': show_alternative
+            'show_alternative': show_alternative,
         }
 
         if base is not None:

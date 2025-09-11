@@ -6,6 +6,7 @@ from sdk.httpp.response import Response
 
 class RequestsClient(HttpClient):
     """HTTP client based on the requests library"""
+
     def get(self, url: str, params: dict | None = None) -> Response:
         """
         Send GET request.
