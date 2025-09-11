@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from sdk.httpp.response import Response
+from sdk.transport.response import Response
 
 
 class HttpClient(ABC):

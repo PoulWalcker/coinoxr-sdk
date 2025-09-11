@@ -1,5 +1,5 @@
-from sdk.httpp.base import HttpClient
-from sdk.httpp.response import Response
+from sdk.transport.base import HttpClient
+from sdk.transport.response import Response
 
 
 class StubClient(HttpClient):

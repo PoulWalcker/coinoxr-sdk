@@ -1,28 +1,19 @@
 import requests
 
-from sdk.httpp.base import HttpClient
-from sdk.httpp.response import Response
+from sdk.transport.base import HttpClient
+from sdk.transport.response import Response
 
 
 class RequestsClient(HttpClient):
     """HTTP client based on the requests library"""
 
     def get(self, url: str, params: dict | None = None) -> Response:
-        """
-        Send GET request.
-
-        Args:
-            url: Full request URL.
-            params: Query parameters.
-
-        Returns:
-            Response: SDK Response object with status code and parsed JSON body.
-        """
+        """Send GET request and return SDK Response"""
         response = requests.get(url, params=params)
         return self._wrap_response(response)
 
     def _wrap_response(self, response: requests.Response) -> Response:
-        """Convert requests.Response into SDK Response"""
+        """Wrap requests.Response into SDK Response"""
         try:
             return Response(response.status_code, response.json())
         except ValueError:

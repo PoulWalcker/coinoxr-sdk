@@ -1,4 +1,4 @@
-from sdk.httpp.base import HttpClient
+from sdk.transport.base import HttpClient
 from sdk.config import DEFAULT_BASE_URL
 
 
