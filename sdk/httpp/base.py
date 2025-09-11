@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
+from sdk.httpp.response import Response
 
 
 class HttpClient(ABC):
+    """Abstract HTTP client interface"""
     @abstractmethod
-    def get(self, url, params=None):
+    def get(self, url: str, params: dict | None = None) -> Response:
+        """Send GET request"""
         pass

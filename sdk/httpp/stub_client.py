@@ -1,9 +1,16 @@
-import requests
-
 from sdk.httpp.base import HttpClient
 from sdk.httpp.response import Response
 
 
 class StubClient(HttpClient):
-    def get(self, url, params=None) -> Response:
-        return Response(200, {'data': 'fake get request'})
+    """Stub HTTP client for testing without real network calls"""
+
+    def get(self, url: str, params: dict | None = None) -> Response:
+        return Response(
+            200,
+            {
+                "data": "fake get request",
+                "url": url,
+                "params": params,
+            },
+        )
