@@ -7,8 +7,8 @@ class UsageService:
     def __init__(self, requester_service: RequesterService):
         self._request_service = requester_service
 
-    def usage(self, pretty_print: bool = False):
+    def get(self, pretty_print: bool = False):
 
-        params = {'pretty_print': pretty_print}
+        params = {'prettyprint': pretty_print}
 
         return self._request_service.get('/usage.json', params)
