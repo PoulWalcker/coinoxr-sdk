@@ -1,48 +1,100 @@
 # coinoxr-python
 
-Unofficial Python SDK for the [Open Exchange Rates](https://openexchangerates.org/) API.
+Unofficial Python SDK for the [Open Exchange Rates](https://openexchangerates.org/) API.  
+Provides Pythonic services for exchange rates, currency conversion, OHLC and usage endpoints.
+
+> ⚠️ This project is **not affiliated** with Open Exchange Rates.
+
+---
 
 ## Installation
 
+From source (development dependencies included):
+
 ```bash
-pip install -r requirements.txt
+pip install -e '.[dev]'
 ```
 
-## Usage
+When published to PyPI:
 
 ```bash
-from sdk.client import CoinoxrClient
+pip install coinoxr-python
+```
+
+---
+
+## Quickstart
+
+```python
+from sdk import CoinoxrClient
 
 client = CoinoxrClient(app_id="your_api_key")
 
-# List available currencies
+# List currencies
 currencies = client.currencies.get()
 print(currencies)
+
+# Latest exchange rates
+latest = client.rates.latest(base="USD", symbols=["EUR", "GBP"])
+print(latest)
+
+# Convert 100 USD to EUR
+converted = client.converter.convert(100, "USD", "EUR")
+print(converted)
 ```
+
+---
 
 ## Services
 
-### currencies
+### `currencies`
 - **Endpoint:** `/currencies.json`  
 - **Method:** `client.currencies.get()`
 
-### rates
-- **Endpoints:**
-  - `/latest.json` → `client.rates.latest(base="USD", symbols=["EUR","GBP"])`
-  - `/historical/{YYYY-MM-DD}.json` → `client.rates.historical(date="2025-01-01", base="USD", symbols=["EUR"])`
-  - `/time-series.json` → `client.rates.time_series(start="2025-01-01", end="2025-01-31", base="USD", symbols=["EUR","GBP"])`
+### `rates`
+- `/latest.json` → `client.rates.latest(...)`
+- `/historical/{YYYY-MM-DD}.json` → `client.rates.historical(...)`
+- `/time-series.json` → `client.rates.time_series(...)`
 
-### convert
+### `convert`
 - **Endpoint:** `/convert`  
-- **Method:** `client.convert.convert("USD", "EUR", 100)`  
+- **Method:** `client.converter.convert(100, "USD", "EUR")`
 
-### ohlc
+### `ohlc`
 - **Endpoint:** `/ohlc.json`  
-- **Method:** `client.ohlc.ohlc(start="2025-01-01T00:00:00Z", period="daily", base="USD", symbols=["EUR","GBP"])`  
+- **Method:**  
+  ```python
+  client.ohlc.ohlc(
+      start="2025-01-01T00:00:00Z",
+      period="daily",
+      base="USD",
+      symbols=["EUR","GBP"]
+  )
+  ```
 
-### usage
+### `usage`
 - **Endpoint:** `/usage.json`  
-- **Method:** `client.usage.usage()`  
+- **Method:** `client.usage.get()`
 
+---
 
-[WIP]
+## Development
+
+Run tests:
+
+```bash
+pytest -q
+```
+
+Lint and format:
+
+```bash
+ruff check .
+black .
+```
+
+---
+
+## License
+
+[MIT](LICENSE)
