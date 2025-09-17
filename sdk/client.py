@@ -4,7 +4,6 @@ from sdk.services.requester import RequesterService
 from sdk.services.converter import ConverterService
 from sdk.services.ohlc import OhlcService
 from sdk.services.usage import UsageService
-
 from sdk.transport.request_client import RequestsClient
 
 
@@ -18,4 +17,3 @@ class CoinoxrClient:
         self.converter = ConverterService(self._requester_service)
         self.ohlc = OhlcService(self._requester_service)
         self.usage = UsageService(self._requester_service)
-
