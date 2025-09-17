@@ -1,4 +1,5 @@
 from sdk.services.requester import RequesterService
+from sdk.transport.types import Params
 
 
 class ConverterService:
@@ -16,6 +17,6 @@ class ConverterService:
     ):
         path = f'/convert/{value}/{currency_from}/{currency_to}'
 
-        params = {'prettyprint': pretty_print}
+        params: Params = {'prettyprint': pretty_print}
 
         return self._request_service.get(path, params)

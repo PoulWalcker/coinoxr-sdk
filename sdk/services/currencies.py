@@ -1,4 +1,5 @@
 from sdk.services.requester import RequesterService
+from sdk.transport.types import Params
 
 
 class CurrenciesService:
@@ -13,7 +14,7 @@ class CurrenciesService:
         show_alternative: bool = False,
         show_inactive: bool = False,
     ):
-        params = {
+        params: Params = {
             'prettyprint': pretty_print,
             'show_alternative': show_alternative,
             'show_inactive': show_inactive,

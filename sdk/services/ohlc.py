@@ -1,5 +1,6 @@
 from sdk.services.requester import RequesterService
 from sdk.utils.dates import ensure_date
+from sdk.transport.types import Params
 
 
 class OhlcService:
@@ -20,7 +21,7 @@ class OhlcService:
         if not ensure_date(start, "%Y-%m-%dT%H:%M:%SZ"):
             raise ValueError("Invalid datetime format, expected YYYY-MM-DDThh:mm:ssZ")
 
-        params = {
+        params: Params = {
             'start': start,
             'period': period,
             'prettyprint': pretty_print,

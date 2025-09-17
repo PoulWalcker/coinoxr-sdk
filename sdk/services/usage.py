@@ -1,4 +1,5 @@
 from sdk.services.requester import RequesterService
+from sdk.transport.types import Params
 
 
 class UsageService:
@@ -9,6 +10,6 @@ class UsageService:
 
     def get(self, pretty_print: bool = False):
 
-        params = {'prettyprint': pretty_print}
+        params: Params = {'prettyprint': pretty_print}
 
         return self._request_service.get('/usage.json', params)

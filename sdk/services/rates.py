@@ -1,5 +1,6 @@
 from sdk.services.requester import RequesterService
 from sdk.utils.dates import ensure_date
+from sdk.transport.types import Params
 
 
 class RatesService:
@@ -15,7 +16,7 @@ class RatesService:
         pretty_print: bool = False,
         show_alternative: bool = False,
     ):
-        params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
+        params: Params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
 
         if base is not None:
             params['base'] = base
@@ -38,7 +39,7 @@ class RatesService:
 
         path = f'/historical/{date}.json'
 
-        params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
+        params: Params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
 
         if base is not None:
             params['base'] = base
@@ -67,7 +68,7 @@ class RatesService:
         if start > end:
             raise ValueError("'start' must be <= 'end'")
 
-        params = {
+        params: Params = {
             'start': start,
             'end': end,
             'prettyprint': pretty_print,
