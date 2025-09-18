@@ -1,5 +1,6 @@
 import pytest
 from sdk.transport.response import Response
+from sdk.exceptions import ValidationError
 
 
 def test_ohlc_path(ohlc_service, monkeypatch):
@@ -68,7 +69,7 @@ def test_ohlc_flags(ohlc_service, monkeypatch):
     ],
 )
 def test_ohlc_invalid_date_raises(ohlc_service, bad_date):
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(ValidationError) as excinfo:
         ohlc_service.ohlc(bad_date, "1d")
     assert (
         excinfo.value.args[0]
