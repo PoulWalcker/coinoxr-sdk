@@ -2,6 +2,7 @@ import requests
 
 from sdk.transport.base import HttpClient
 from sdk.transport.response import Response
+from sdk.exceptions import NetworkError
 
 
 class RequestsClient(HttpClient):
@@ -9,12 +10,17 @@ class RequestsClient(HttpClient):
 
     def get(self, url: str, params: dict | None = None) -> Response:
         """Send GET request and return SDK Response"""
-        response = requests.get(url, params=params)
-        return self._wrap_response(response)
+        try:
+            response = requests.get(url, params=params)
+            return self._wrap_response(response)
 
-    def _wrap_response(self, response: requests.Response) -> Response:
+        except requests.RequestException as e:
+            raise NetworkError(str(e)) from e
+
+    def _wrap_response(self, r: requests.Response) -> Response:
         """Wrap requests.Response into SDK Response"""
         try:
-            return Response(response.status_code, response.json())
+            body = r.json()
         except ValueError:
-            return Response(response.status_code, None)
+            body = None
+        return Response(r.status_code, body)

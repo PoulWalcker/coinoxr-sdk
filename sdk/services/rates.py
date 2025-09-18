@@ -1,6 +1,7 @@
 from sdk.services.requester import RequesterService
 from sdk.utils.dates import ensure_date
 from sdk.transport.types import Params
+from sdk.exceptions import ValidationError
 
 
 class RatesService:
@@ -16,7 +17,10 @@ class RatesService:
         pretty_print: bool = False,
         show_alternative: bool = False,
     ):
-        params: Params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
+        params: Params = {
+            'prettyprint': pretty_print,
+            'show_alternative': show_alternative,
+        }
 
         if base is not None:
             params['base'] = base
@@ -35,11 +39,14 @@ class RatesService:
         show_alternative: bool = False,
     ):
         if not ensure_date(date, "%Y-%m-%d"):
-            raise ValueError("Invalid date format for 'date', expected YYYY-MM-DD")
+            raise ValidationError("Invalid date format for 'date', expected YYYY-MM-DD")
 
         path = f'/historical/{date}.json'
 
-        params: Params = {'prettyprint': pretty_print, 'show_alternative': show_alternative}
+        params: Params = {
+            'prettyprint': pretty_print,
+            'show_alternative': show_alternative,
+        }
 
         if base is not None:
             params['base'] = base
@@ -60,13 +67,15 @@ class RatesService:
     ):
 
         if not ensure_date(start, "%Y-%m-%d"):
-            raise ValueError("Invalid date format for 'start', expected YYYY-MM-DD")
+            raise ValidationError(
+                "Invalid date format for 'start', expected YYYY-MM-DD"
+            )
 
         if not ensure_date(end, "%Y-%m-%d"):
-            raise ValueError("Invalid date format for 'end', expected YYYY-MM-DD")
+            raise ValidationError("Invalid date format for 'end', expected YYYY-MM-DD")
 
         if start > end:
-            raise ValueError("'start' must be <= 'end'")
+            raise ValidationError("'start' must be <= 'end'")
 
         params: Params = {
             'start': start,

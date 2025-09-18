@@ -1,4 +1,5 @@
 import pytest
+from sdk.exceptions import ValidationError
 
 
 # helpers
@@ -47,7 +48,7 @@ class TestHistorical:
         ],
     )
     def test_date_raises(self, rates_services, bad_date):
-        with pytest.raises(ValueError) as excinfo:
+        with pytest.raises(ValidationError) as excinfo:
             rates_services.historical(date=bad_date)
         assert (
             excinfo.value.args[0]
@@ -85,11 +86,11 @@ class TestTimeSeries:
         ],
     )
     def test_date_raises(self, rates_services, start, end):
-        with pytest.raises(ValueError) as excinfo:
+        with pytest.raises(ValidationError) as excinfo:
             rates_services.time_series(start=start, end=end)
         assert excinfo.value.args[0].startswith("Invalid date format")
 
     def test_start_after_end_raises(self, rates_services):
-        with pytest.raises(ValueError) as excinfo:
+        with pytest.raises(ValidationError) as excinfo:
             rates_services.time_series(start="2025-01-02", end="2025-01-01")
         assert excinfo.value.args[0].startswith("'start' must be <= 'end'")
